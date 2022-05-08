@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Main</title>
+<!-- 브라우저 스타일 초기화 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+<!-- 구글 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- 부트스트랩 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- 구글 차트 API -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load('current', {packages: ['corechart']});
+  // google.charts.setOnLoadCallback(drawChart);
+</script>
+
+<link href="./main.css" rel="stylesheet">
+<script defer src="./chart.js"></script>
+</head>
+<body>
+  <div class="title">HOBBY<span class="title-primary">SEO</span></div>
+
+	<section class="inputTable">
+	<div class="inner">
+	<form action="#" method="get" name="fr">
+		<table class="table table-hover" id="#calcTable">
+			<tr>
+				<th style="font-size: 20px; font-weight: 700;">현황자료</th>
+				<th style="font-weight: 700;" colspan="2">입력값</th>
+				<th style="font-weight: 700;" colspan="2">입력값(% 단위)</th>
+				<th style="font-weight: 700;" >입력값(% 단위)</th>
+			</tr>
+			<tr>
+				<td>수강료</td>
+				<td><input type="text" name="A" id="A" required value="70000"></td>
+				<td>주단위 이용고객(1주 이하)</td>
+				<td><input type="text" name="week1" required value="10"></td>
+				<td>a</td>
+				<td><input type="text" name="a" value="10"></td>
+			</tr>
+			<tr>
+				<td>수강인원</td>
+				<td><input type="text" name="B" required value="100" onkeyup="calcMaxE();"></td>
+				<td>주단위 이용고객(2주 이하)</td>
+				<td><input type="text" name="week2" required value="20"></td>
+				<td>b</td>
+				<td><input type="text" name="b" value="20"></td>
+				
+			</tr>
+			<tr>
+				<td>수강가능인원</td>
+				<td><input type="text" name="C" required value="150"  onkeyup="calcMaxE();"></td>
+				<td>주단위 이용고객(3주 이하)</td>
+				<td><input type="text" name="week3" required value="60"></td>
+				<td>출석률 고려한 추가수강 변수(d)</td>
+				<td><input type="text" name="d" value="10"></td>
+			</tr>
+			<tr>
+				<td>평균출석일</td>
+				<td><input type="text" name="D" value="20"></td>
+				<td>주단위 이용고객(4주 이하)</td>
+				<td><input type="text" name="week4" required value="10"></td>
+				<td>신규고객 비율(e)</td>
+				<td><input type="text" name="e"><input type="text" name="maxE" disabled="disabled"></td>
+			</tr>
+			<tr>
+				<td>총영업일</td>
+				<td colspan="5"><input type="text" name="I" required value="28"></td>
+			</tr>
+			<tr>
+				<td>총매출</td>
+				<td colspan="5"><input type="text" name="sales" disabled="disabled"></td>
+			</tr>
+		</table>
+    <input type="text" name="t" disabled="disabled">
+    <span class="t-info">일 이상 이용시 수강료와 동일</span><br>
+    <span>k일 이용시 가격 ▷ </span>
+    <input type="text" name="k" required >
+    <span>금액</span>
+    <input type="text" name="kCost" disabled="disabled"><br><br>
+		<input type="submit" value="계산하기" class="btn btn-primary">
+	</form>
+	</div>
+	<hr>
+	</section>
+
+
+	<section class="chartResult">
+    <div class="inner">
+      <div id="chart_div1" style="width:800; height:600"></div>
+      <div id="chart_div2" style="width:800; height:600"></div>
+      <div id="chart_div3" style="width:800; height:600"></div>
+      <div id="chart_div4" style="width:800; height:600"></div>
+    </div>
+  </section>
+</body>
+</html>
