@@ -157,10 +157,10 @@ function calcABDE() {
 
 // 기존 a,b,d,e 값 출력
 function showNowABDE() {
-  document.querySelector('.nowA').innerText = "표준값 : "+a;
-  document.querySelector('.nowB').innerText = "표준값 : "+b;
-  document.querySelector('.nowD').innerText = "표준값 : "+d;
-  document.querySelector('.nowE').innerText = "표준값 : "+e;
+  document.querySelector('.nowA').innerText = "표준값 : "+Math.ceil(a*100)/100;
+  document.querySelector('.nowB').innerText = "표준값 : "+Math.ceil(b*100)/100;
+  document.querySelector('.nowD').innerText = "표준값 : "+Math.ceil(d*100)/100;
+  document.querySelector('.nowE').innerText = "표준값 : "+Math.ceil(e*100)/100;
 }
 
 
@@ -217,8 +217,8 @@ function calcData(result) {
     // w4 = Math.floor(B*(H/100) * w4Cost); // 4주차 가격
     // 기대 매출 합계 계산
     let total = w1 + w2 + w3 + w4;
-    expectSales.push(Math.floor(total));
-    
+    expectSales.push(total);
+
     // 변수(a,b,d,e) 5씩 증가함에 따라 기대매출 변화 계산
     if(result == "a") {
       resultChange.push(aRe);
@@ -267,27 +267,24 @@ eDown.addEventListener('click', function () {e -= 1;drawChartAlter();showAfterAB
 
 // 변화된 a,b,d,e 값 출력
 function showAfterABDE() {
-  document.querySelector('.afterA').innerText = "변화값 : "+a;
-  document.querySelector('.afterB').innerText = "변화값 : "+b;
-  document.querySelector('.afterD').innerText = "변화값 : "+d;
-  document.querySelector('.afterE').innerText = "변화값 : "+e;
+  document.querySelector('.afterA').innerText = "변화값 : "+Math.ceil(a*100)/100;
+  document.querySelector('.afterB').innerText = "변화값 : "+Math.ceil(b*100)/100;
+  document.querySelector('.afterD').innerText = "변화값 : "+Math.ceil(d*100)/100;
+  document.querySelector('.afterE').innerText = "변화값 : "+Math.ceil(e*100)/100;
 }
 
 // 기대매출 계산 - a,b,d,e 변화에 따른(유저가 변경한) 기대매출 계산함
 function calcAfterExpectSale() {
   // 변수(a,b,d,e 중 하나)에 따른 기대매출 변화
-  let w1 = Math.floor((B * (E / 100) * ((A / I) * (I / 8 + 1 / 2) * ((100 + a + 3 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100))); // 1주차 가격
-  let w2 = Math.floor(B * (F / 100) * ((A / I) * ((3 / 8) * I + 1 / 2) * ((100 + a + 2 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 2주차 가격
-  let w3 = Math.floor(B * (G / 100) * ((A / I) * ((5 / 8) * I + 1 / 2) * ((100 + a + b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 3주차 가격
-  let w4 = Math.floor(B * (H / 100) * ((A / I) * ((7 / 8) * I + 1 / 2) * (100 + a) / 100) * ((100 + d) / 100) * ((100 + e) / 100)); // 4주차 가격
+  let w1 = ((B * (E / 100) * ((A / I) * (I / 8 + 1 / 2) * ((100 + a + 3 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100))); // 1주차 가격
+  let w2 = (B * (F / 100) * ((A / I) * ((3 / 8) * I + 1 / 2) * ((100 + a + 2 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 2주차 가격
+  let w3 = (B * (G / 100) * ((A / I) * ((5 / 8) * I + 1 / 2) * ((100 + a + b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 3주차 가격
+  let w4 = (B * (H / 100) * ((A / I) * ((7 / 8) * I + 1 / 2) * (100 + a) / 100) * ((100 + d) / 100) * ((100 + e) / 100)); // 4주차 가격
 
   // 기대 매출 합계 계산
   let total = w1 + w2 + w3 + w4;
-  if (total < 7000000) {
-    total = 7000000;
-  }
 
-  afterExpectSale = Math.floor(total);
+  afterExpectSale = total;
 } // calcAfterExpectSale
 
 
@@ -314,8 +311,8 @@ function drawChart(dataABDE, seq) {
     },
     vAxis: {
       viewWindow: {
-        max: 10000000,
-        min: 6500000
+        max: expectSale*1.3,
+        min: expectSale*0.9
       }
     }
   };
@@ -348,8 +345,8 @@ function drawChartAlter() {
     title: 'a,b,d,e 에 따른 기대 매출 변화',
     vAxis: {
       viewWindow: {
-          max: 10000000,
-          min: 6500000
+          max: afterExpectSale*1.2,
+          min: afterExpectSale*0.7
       }
     }
   };
@@ -471,6 +468,9 @@ function drawBasic(event) {
   drawChartK();
 
   document.querySelector('#kResult').innerHTML = "=> "+t[0]+"일 이상부터 수강료와 같아짐";
+
+  // t배열 비우기
+  t = [];
 
   // k일 이용에 따른 금액 그래프 출력
 }

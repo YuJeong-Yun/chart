@@ -60,19 +60,25 @@ form input[name="k"] {
 .chartResult > .inner .alter-wrapper {
   font-size: 20px;
 }
-.chartResult > .inner .alter-wrapper span:first-child,
-.chartResult > .inner .alter-wrapper span:nth-child(2) {
-  padding: 7px;
+.chartResult > .inner .alter-wrapper > div {
+  display: flex;
+}
+.chartResult > .inner .alter-wrapper > div > div:first-child,
+.chartResult > .inner .alter-wrapper > div > div:nth-child(2) {
+  width: 35px;
+  height: 35px;
   margin: 0 5px;
   border: 1px solid #aaa;
   color: #aaa;
+  line-height: 35px;
+  text-align: center;
   cursor: pointer;
 }
-.chartResult > .inner .alter-wrapper span:nth-child(2) {
+.chartResult > .inner .alter-wrapper > div > div:nth-child(2) {
   margin-right: 15px;
 }
-.chartResult > .inner .alter-wrapper span:nth-child(3) {
-  margin-right: 10px;
+.chartResult > .inner .alter-wrapper > div > div:nth-child(3) {
+  width: 150px;
 }
 .chartResult #kResult {
   margin-left: 100px;
