@@ -87,11 +87,41 @@
 
 	<section class="chartResult">
     <div class="inner">
-      <div id="chart_div1" style="width:700px; height:500px"></div>
-      <div id="chart_div2" style="width:700px; height:500px"></div>
-      <div id="chart_div3" style="width:700px; height:500px"></div>
-      <div id="chart_div4" style="width:700px; height:500px"></div>
-      <div id="chart_div5" style="width:1400px; height:300px"></div>
+      <div id="chart_div1" style="width:700px; height:500px"></div> <!--a값 증가에 따른 기대매출 그래프-->
+      <div id="chart_div2" style="width:700px; height:500px"></div> <!--b-->
+      <div id="chart_div3" style="width:700px; height:500px"></div> <!--d-->
+      <div id="chart_div4" style="width:700px; height:500px"></div> <!--e-->
+      <div class="alter-wrapper" style="display: none;">
+        <div class="alterA">
+          a 
+          <span class="aUp">△</span> <!--클릭하면 a값 +1-->
+          <span class="aDown">▽</span> <!--클릭하면 a값 -1-->
+          <span class="nowA"></span> <!--초기 a값-->
+          <span class="afterA"></span> <!--사용자가 변경한 a값-->
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="alterB">
+          b <span class="bUp">△</span>
+          <span class="bDown">▽</span>
+          <span class="nowB"></span>
+          <span class="afterB"></span>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="alterD">
+          d 
+          <span class="dUp">△</span>
+          <span class="dDown">▽</span>
+          <span class="nowD"></span>
+          <span class="afterD"></span>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="alterE">
+          e 
+          <span class="eUp">△</span>
+          <span class="eDown">▽</span>
+          <span class="nowE"></span>
+          <span class="afterE"></span>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <div id="alterABDE" style="width:700px; height:500px"></div> <!-- a,b,d,e 선택값에 따른 기대매출 그래프 -->
+      <div id="chart_k" style="width:1400px; height:400px"></div>
       <div id="kResult"></div>
     </div>
   </section>
