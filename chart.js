@@ -8,16 +8,14 @@ const fr = document.fr;
 
 // a,b,d,e 중 3개 값 넣었는지 체크
 function check() {
-  if (fr.a.value != "" && fr.b.value != "" && fr.d.value != "" && fr.e.value == "") {
+  if (fr.a.value != "" &&  fr.d.value != "" && fr.e.value == "") {
     return true;
-  } else if (fr.a.value != "" && fr.b.value != "" && fr.d.value == "" && fr.e.value != "") {
+  } else if (fr.a.value != "" && fr.d.value == "" && fr.e.value != "") {
     return true;
-  } else if (fr.a.value != "" && fr.b.value == "" && fr.d.value != "" && fr.e.value != "") {
-    return true;
-  } else if (fr.a.value == "" && fr.b.value != "" && fr.d.value != "" && fr.e.value != "") {
+  } else if (fr.a.value == "" && fr.d.value != "" && fr.e.value != "") {
     return true;
   } else {
-    alert('a,b,d,e 중 3개의 값만 입력하세요.');
+    alert('a,d,e 중 2개의 값만 입력하세요.');
     return false;
   }
 }
@@ -36,7 +34,6 @@ function check() {
 
 
 let a = 0;
-let b = 0;
 let d = 0;
 let e = 0;
 let I = 0;
@@ -49,10 +46,9 @@ let B = 0;
 // let C = 0;
 let D = 0;
 
-// a,b,d,e 중 3개 값 받아서 나머지 하나 계산
+// a,d,e 중 3개 값 받아서 나머지 하나 계산
 function calcABDE() {
   a = Number(fr.a.value);
-  b = Number(fr.b.value);
   d = Number(fr.d.value);
   e = Number(fr.e.value);
   I = Number(fr.I.value); // 총영업일
@@ -66,22 +62,22 @@ function calcABDE() {
   D = Number(fr.D.value); // 평균 출석일
 
 
-  // a,b,d,e 중 한 개 값 계산
-  // 4주차 부터 시작해서 각 주차 가격이 최대값 넘어서면 최대값으로 대체해 넣어서 a,b,d,e 값 다시 계산
+  // a,d,e 중 한 개 값 계산
+  // 4주차 부터 시작해서 각 주차 가격이 최대값 넘어서면 최대값으로 대체해 넣어서 a,d,e 값 다시 계산
   if (a == "") {
-    a = ( ((I * 10000) / ((100 + d) * (100 + e)) - (E / 100 * (100 + 3 * b) / 100 * (I / 8 + 1 / 2) + F / 100 * (100 + 2 * b) / 100 * (3 * I / 8 + 1 / 2) + G / 100 * (100 + b) / 100 * (5 * I / 8 + 1 / 2) + H / 100 * (7 * I / 8 + 1 / 2))) * 80000 / (E * (I + 4) + F * (3 * I + 4) + G * (5 * H + 4) + H * (7 * I + 4)));
+    a = ( (100000000*I / ((100+d)*(100+e))  - (H * ((7/8)*I + 1/2) * 100)  -  (G * ((5/8)*I + 1/2) * (100 + 4/(3*I)*100))  -  (F * ((3/8)*I + 1/2) * ((1+2/I)*100 + (1+2/I)*(4/(3*I)*100)))  -  (E * (I/8 + 1/2) * (1+4/I)*100)  -  (E * (I/8 + 1/2) *  (1+4/I) * ( (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) - 100 )))  /   (E * (I/8 + 1/2) *  (1+4/I) * (1+4/(3*I))  +  F * ((3/8)*I + 1/2) * (1+4/(3*I)) +  G *  ((5/8)*I + 1/2) * (1+4/(3*I))) );
     console.log("원래 a : "+a);
     // 4주차 가격이 최대 가격보다 클 때
-    if( B*(H/100)*((A/I)* ((7/8)*I + 1/2)) >= (A * B * (H/100)) ) {
-      a = (( (1-H/100)*100000000*I / ((100+d)*(100+e))-E* (I/8 + 1/2)*100-E* (I/8 + 1/2) *3*b-F* ((3/8)*I + 1/2) * 100-F* ((3/8)*I + 1/2)*2*b-G* ((5/8)*I + 1/2) *100-G* ((5/8)*I + 1/2)*b)/(E* (I/8 + 1/2)+F* ((3/8)*I + 1/2 )));
+    if( (B*(H/100)*((A/I)* ((7/8)*I + 1/2) * (100+a)/100)) >= (A * B * (H/100)) ) {
+      a = (( (100000000*I - H/100) / ((100+d)*(100+e))  -  (G * ((5/8)*I + 1/2) * (100 + 4/(3*I)*100))   -   (F * ((3/8)*I + 1/2) * ( (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) ))  -  (E * (I/8 + 1/2) * (1+4/I)*100 ) - (E * (I/8 + 1/2) * (1+4/I) * ( (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) - 100 )))  /  (E * (I/8 + 1/2) *  (1+4/I) *  (1+4/(3*I))    +   F * ((3/8)*I + 1/2) * (1+4/(3*I))   +  G * ((5/8)*I + 1/2) *  (1+4/(3*I)) ) );
       console.log("4주차 대체 후 a : "+a);
       // 3주차 가격이 최대 가격보다 클 때
-      if(B*(G/100)*((A/I)* ((5/8)*I + 1/2) *((100+a+b)/100)) >= A * B * (G/100) ) {
-        a = ((((1-G/100-H/100)*100000000)*I/((100+d)*(100+e))-E* (I/8 + 1/2) * 100-E* (I/8 + 1/2) *3*b-F* ((3/8)*I + 1/2) * 100-F* ((3/8)*I + 1/2)*2*b)/(E* (I/8 + 1/2)+F* ((3/8)*I + 1/2)));
+      if( B*G/100*A/I* ((5/8)*I + 1/2) *(100+4/(3*I)*100+(1+4/(3*I))*a) >= A * B * (G/100) ) {
+        a = ( (((100000000*I - G/100 - H/100) / ((100+d)*(100+e)))   -   (F * ((3/8)*I + 1/2) * ((1+2/I)*100 + (1+2/I)*(4/(3*I)*100)))   -   (E * (I/8 + 1/2) *  (1+4/I)*100  )  -  (E * (I/8 + 1/2) * (1+4/I) * ((1+2/I)*100 + (1+2/I)*(4/(3*I)*100) - 100 )))  /  (F * ((3/8)*I + 1/2) * (1+4/(3*I)) + E * (I/8 + 1/2) * (1+4/I) * (1+4/(3*I)) ) );
         console.log("3주차 대체 후 a : "+a);
         // 2주차 가격이 최대 가격보다 클 때
-        if(B*(F/100)*((A/I)* ((3/8)*I + 1/2) * ((100+a+2*b)/100)) >= A * B* (F/100)) {
-          a = ((1-F/100-G/100-H/100)*100000000/(E/I* (I/8 + 1/2)*(100+d)*(100+e))-100-3*b);
+        if( B*F/100*A/I* ((3/8)*I + 1/2) * (100+(1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)/100 >= A * B* (F/100) ) {
+          a = ((  ((100000000*I - F/100 - G/100 - H/100) / (  E * (I/8 + 1/2)  *  (100+d)  *  (100+e) ) - (1+4/I) * 100) /  (1+4/I)  + 100 - (1+2/I)*100  -  (1+2/I)*(4/(3*I)*100)   ) /   (1+4/(3*I)));
           console.log("2주차 대체 후 a : "+a);
         }
       }
@@ -89,41 +85,20 @@ function calcABDE() {
     showNowABDE();
     return "a";
 
-  } else if (b == "") {
-    b = ( ((I * 10000) / ((100 + d) * (100 + e)) - (E / 100 * (100 + a) / 100 * (I / 8 + 1 / 2) + F / 100 * (100 + a) / 100 * (3 * I / 8 + 1 / 2) + G / 100 * (100 + a) / 100 * (5 * I / 8 + 1 / 2) + H / 100 * (100 + a) / 100 * (7 * I / 8 + 1 / 2))) * 80000 / (E * 3 * (I + 4) + F * 2 * (3 * I + 4) + G * (5 * I + 4)));
-    console.log("원래 b : "+b);
-    // 4주차 가격이 최대 가격보다 클 때
-    if( (B*(H/100)*((A/I)* ((7/8)*I + 1/2) * (100+a)/100)) >= (A * B * (H/100)) ) {
-      b = ((((1-H/100)*100000000*I/((100+d)*(100+e))-E* (I/8 + 1/2) * 100-E* (I/8 + 1/2) *a-F* ((3/8)*I + 1/2) * 100-F* ((3/8)*I + 1/2)*a-G* ((5/8)*I + 1/2) *100-G* ((5/8)*I + 1/2)*a)/(E* (I/8 + 1/2)*3+F* ((3/8)*I + 1/2)*2+G* ((5/8)*I + 1/2)))/3);
-      console.log("4주차 대체 후 b : "+b);
-      // 3주차 가격이 최대 가격보다 클 때
-      if(B*(G/100)*((A/I)* ((5/8)*I + 1/2) *((100+a+b)/100)) >= A * B * (G/100) ) {
-        b = (((((1-G/100-H/100)*100000000)*I/((100+d)*(100+e))-E* (I/8 + 1/2) * 100-E* (I/8 + 1/2) *a-F* ((3/8)*I + 1/2) * 100-F* ((3/8)*I + 1/2)*a)/(E* (I/8 + 1/2) *3+F* ((3/8)*I + 1/2)*2))/2);
-        console.log("3주차 대체 후 b : "+b);
-        // 2주차 가격이 최대 가격보다 클 때
-        if(B*(F/100)*((A/I)* ((3/8)*I + 1/2) * ((100+a+2*b)/100)) >= A * B* (F/100)) {
-          b = (((1-F/100-G/100-H/100)*100000000/(E/I* (I/8 + 1/2)*(100+d)*(100+e))-100-a)/3);
-          console.log("2주차 대체 후 b : "+b);
-        }
-      }
-    }
-    showNowABDE();
-    return "b";
-
   } else if (d == "") {
-    d = ((80000 / (E * (100 + a + 3 * b) * (I + 4) + F * (100 + a + 2 * b) * (3 * I + 4) + G * (100 + a + b) * (5 * I + 4) + H * (100 + a) * (7 * I + 4))) * I * 10000 / (100 + e)) - 100;
+    d = ((100000000*I / (100+e)) / (E * (I/8 + 1/2) * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)  +  G * ((5/8)*I + 1/2) * (100 + 4/(3*I)*100 + (1+4/(3*I))*a)  +  H * ((7/8)*I + 1/2) * (100+a)) - 100);
     console.log("원래 d : "+d);
     // 4주차 가격이 최대 가격보다 클 때
     if( (B*(H/100)*((A/I)* ((7/8)*I + 1/2) * (100+a)/100)) >= (A * B * (H/100)) ) {
-      d = ( ((1-H/100)*100000000)/(E/I* (I/8 + 1/2) * (100+a+3*b)*(100+e)+F/I* ((3/8)*I + 1/2) * (100+a+2*b)*(100+e)+G/I* ((5/8)*I + 1/2) *(100+a+b)*(100+e))-100 );
+      d = ( ((100000000*I - H/100) / (100+e))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)  +   G *  ((5/8)*I + 1/2) * (100 + 4/(3*I)*100 + (1+4/(3*I))*a) ) - 100 );
       console.log("4주차 대체 후 d : "+d);
       // 3주차 가격이 최대 가격보다 클 때
-      if( B*(G/100)*((A/I)* ((5/8)*I + 1/2) *((100+a+b)/100)) >= A * B * (G/100) ) {
-        d = ( (1-G/100-H/100)*100000000/(E/I* (I/8 + 1/2) * (100+a+3*b)*(100+e)+F/I* ((3/8)*I + 1/2) * (100+a+2*b)*(100+e))-100 );
+      if( B*G/100*A/I* ((5/8)*I + 1/2) *(100+4/(3*I)*100+(1+4/(3*I))*a) >= A * B * (G/100) ) {
+        d = ( ((100000000*I - H/100 - G/100) / (100+e))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)) - 100 );
         console.log("3주차 대체 후 d : "+d);
         // 2주차 가격이 최대 가격보다 클 때
-        if( B*(F/100)*((A/I)* ((3/8)*I + 1/2) * ((100+a+2*b)/100)) >= A * B* (F/100) ) {
-          d = ( (1-F/100-G/100-H/100)*100000000/(E/I* (I/8 + 1/2) * ((100+a+3*b))*(100+e))-100 );
+        if( B*F/100*A/I* ((3/8)*I + 1/2) * (100+(1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)/100 >= A * B* (F/100) ) {
+          d = ( ((100000000*I - H/100 - G/100 - F/100) / (100+e))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)) - 100);
           console.log("2주차 대체 후 d : "+d);
         }
       }
@@ -132,19 +107,19 @@ function calcABDE() {
     return "d";
 
   } else if (e == "") {
-    e = ((80000 / (E * (100 + a + 3 * b) * (I + 4) + F * (100 + a + 2 * b) * (3 * I + 4) + G * (100 + a + b) * (5 * I + 4) + H * (100 + a) * (7 * I + 4))) * I * 10000 / (100 + e)) - 100;
+    e = ((100000000*I / (100+d)) / (E * (I/8 + 1/2) * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)  +  G * ((5/8)*I + 1/2) * (100 + 4/(3*I)*100 + (1+4/(3*I))*a)  +  H * ((7/8)*I + 1/2) * (100+a)) - 100);
     console.log("원래 e : "+e);
     // 4주차 가격이 최대 가격보다 클 때
     if( (B*(H/100)*((A/I)* ((7/8)*I + 1/2) * (100+a)/100)) >= (A * B * (H/100)) ) {
-      e = ( ((1-H/100)*100000000)/(E/I* (I/8 + 1/2) * (100+a+3*b)*(100+d)+F/I* ((3/8)*I + 1/2) * (100+a+2*b)*(100+d)+G/I* ((5/8)*I + 1/2) *(100+a+b)*(100+d))-100 );
+      e = ( ((100000000*I - H/100) / (100+d))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)  +   G *  ((5/8)*I + 1/2) * (100 + 4/(3*I)*100 + (1+4/(3*I))*a) ) - 100 );
       console.log("4주차 대체 후 e : "+e);
       // 3주차 가격이 최대 가격보다 클 때
-      if( B*(G/100)*((A/I)* ((5/8)*I + 1/2) *((100+a+b)/100)) >= A * B * (G/100) ) {
-        e = ( (1-G/100-H/100)*100000000/(E/I* (I/8 + 1/2) * (100+a+3*b)*(100+d)+F/I* ((3/8)*I + 1/2) * (100+a+2*b)*(100+d))-100 );
+      if( B*G/100*A/I* ((5/8)*I + 1/2) *(100+4/(3*I)*100+(1+4/(3*I))*a) >= A * B * (G/100) ) {
+        e = ( ((100000000*I - H/100 - G/100) / (100+d))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)  +  F * ((3/8)*I + 1/2) * (100 + (1+2/I)*100 + (1+2/I)*(4/(3*I)*100) + (1+4/(3*I))*a - 100)) - 100 );
         console.log("3주차 대체 후 e : "+e);
         // 2주차 가격이 최대 가격보다 클 때
-        if( B*(F/100)*((A/I)* ((3/8)*I + 1/2) * ((100+a+2*b)/100)) >= A * B* (F/100) ) {
-          e = ( (1-F/100-G/100-H/100)*100000000/(E/I* (I/8 + 1/2) * ((100+a+3*b))*(100+d))-100 );
+        if( B*F/100*A/I* ((3/8)*I + 1/2) * (100+(1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)/100 >= A * B* (F/100) ) {
+          e = ( ((100000000*I - H/100 - G/100 - F/100) / (100+d))  /  (E * (I/8 + 1/2)  * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)) - 100);
           console.log("2주차 대체 후 e : "+e);
         }
       }
@@ -155,10 +130,9 @@ function calcABDE() {
 } // calcABDE
 
 
-// 기존 a,b,d,e 값 출력
+// 기존 a,d,e 값 출력
 function showNowABDE() {
   document.querySelector('.nowA').innerText = "표준값 : "+Math.ceil(a*100)/100;
-  document.querySelector('.nowB').innerText = "표준값 : "+Math.ceil(b*100)/100;
   document.querySelector('.nowD').innerText = "표준값 : "+Math.ceil(d*100)/100;
   document.querySelector('.nowE').innerText = "표준값 : "+Math.ceil(e*100)/100;
 }
@@ -167,7 +141,7 @@ function showNowABDE() {
 
 
 //////////////////////////////////////////////// 차트 함수 //////////////////////////////////////////////////
-let resultChange = []; // 변수(a,b,d,e 중 하나) 변화값 담을 배열
+let resultChange = []; // 변수(a,d,e 중 하나) 변화값 담을 배열
 let expectSales = []; // 기대 매출 변화값 담을 배열
 
 // 차트 데이터 값 계산 - 변수의 변화에 따라 기대 매출 계산
@@ -175,7 +149,6 @@ function calcData(result) {
   // calcMaxE(); // e최대값 출력
 
   let aRe = a;
-  let bRe = b;
   let dRe = d;
   let eRe = e;
 
@@ -189,43 +162,23 @@ function calcData(result) {
   // let w4Cost = 0;
 
 
-  // 변수(a,b,d,e 중 하나)에 따른 기대매출 변화
+  // 변수(a,d,e 중 하나)에 따른 기대매출 변화
   for(let i =0; i < 5; i++) {
-    w1 = ((B*(E/100)*((A/I)* (I/8 + 1/2) * ((100+aRe+3*bRe)/100))*((100+dRe)/100)*((100+eRe)/100))); // 1주차 가격
-    w2 = (B*(F/100)*((A/I)* ((3/8)*I + 1/2) * ((100+aRe+2*bRe)/100))*((100+dRe)/100)*((100+eRe)/100)); // 2주차 가격
-    w3 = (B*(G/100)*((A/I)* ((5/8)*I + 1/2) *((100+aRe+bRe)/100))*((100+dRe)/100)*((100+eRe)/100)); // 3주차 가격
-    w4 = (B*(H/100)*((A/I)* ((7/8)*I + 1/2) * (100+aRe)/100)*((100+dRe)/100)*((100+eRe)/100)); // 4주차 가격
+    w1 = (B*E/100*A/I* (I/8 + 1/2) * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*aRe-100)-100)/100*(100+dRe)/100*(100+eRe)/100); // 1주차 가격
+    w2 = (B*F/100*A/I* ((3/8)*I + 1/2) * (100+(1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*aRe-100)/100*(100+dRe)/100*(100+eRe)/100); // 2주차 가격
+    w3 = (B*G/100*A/I* ((5/8)*I + 1/2) *(100+4/(3*I)*100+(1+4/(3*I))*aRe)*(100+dRe)/100*(100+eRe)/100); // 3주차 가격
+    w4 = (B*H/100*A/I* ((7/8)*I + 1/2) * (100+aRe)/100*(100+dRe)/100*(100+eRe)/100); // 4주차 가격
     // console.log(result+" - 수강료 대체  안한 원래  1,2,3,4주차 기대매출 : "+w1+", "+w2+", "+w3+", "+w4+" = 기대매출 합 "+(w1+w2+w3+w4));
 
-    // // 여기서 수강료 A 보다 크게 나오면 A 로 대체해서 계산
-    // w1Cost = ((A/I)* (I/8 + 1/2) * ((100+aRe+3*bRe)/100))*((100+dRe)/100)*((100+eRe)/100);
-    // w2Cost =((A/I)* ((3/8)*I + 1/2) * ((100+aRe+2*bRe)/100))*((100+dRe)/100)*((100+eRe)/100);
-    // w3Cost = ((A/I)* ((5/8)*I + 1/2) *((100+aRe+bRe)/100))*((100+dRe)/100)*((100+eRe)/100);
-    // w4Cost = ((A/I)* ((7/8)*I + 1/2) * (100+aRe)/100)*((100+dRe)/100)*((100+eRe)/100);
-    // console.log("각 주차 가격 계산(여기서 A값 보다 크면 A로 계싼) - "+w1Cost+", " +w2Cost+", "+w3Cost+", "+w4Cost);
-
     
-    // // 각 주차 가격이 수강료(A) 보다 크면 수강료(A)로 계산
-    // if(w1Cost > A ) {w1Cost = A;}
-    // if(w2Cost > A ) {w2Cost = A;}
-    // if(w3Cost > A ) {w3Cost = A;}
-    // if(w4Cost > A ) {w4Cost = A;}
-    
-    // w1 = Math.floor(B*(E/100) * w1Cost); // 1주차 가격
-    // w2 = Math.floor(B*(F/100) * w2Cost); // 2주차 가격
-    // w3 = Math.floor(B*(G/100) * w3Cost); // 3주차 가격
-    // w4 = Math.floor(B*(H/100) * w4Cost); // 4주차 가격
     // 기대 매출 합계 계산
     let total = w1 + w2 + w3 + w4;
     expectSales.push(total);
 
-    // 변수(a,b,d,e) 5씩 증가함에 따라 기대매출 변화 계산
+    // 변수(a,d,e) 5씩 증가함에 따라 기대매출 변화 계산
     if(result == "a") {
       resultChange.push(aRe);
       aRe += 5;
-    }else if(result == "b") {
-      resultChange.push(bRe);
-      bRe += 5;
     }else if(result == "d") {
       resultChange.push(dRe);
       dRe += 5;
@@ -234,52 +187,46 @@ function calcData(result) {
       eRe += 5;
     }
   }
-  expectSale = expectSales[0];
+  expectSale = expectSales[0]; // 초기 a,d,e값으로 계산한 기대매출
 } // calcData
 
 
 
 
-// 유저가 a,b,d,e 값 조절해 볼 수 있는 그래프
+// 유저가 a,d,e 값 조절해 볼 수 있는 그래프
 const aUp = document.querySelector('.aUp');
-const bUp = document.querySelector('.bUp');
 const dUp = document.querySelector('.dUp');
 const eUp = document.querySelector('.eUp');
 const aDown = document.querySelector('.aDown');
-const bDown = document.querySelector('.bDown');
 const dDown = document.querySelector('.dDown');
 const eDown = document.querySelector('.eDown');
 const afterA = document.querySelector('.afterA');
-const afterB = document.querySelector('.afterB');
 const afterD = document.querySelector('.afterD');
 const afterE = document.querySelector('.afterE');
-let expectSale = 0; // 원래 a,b,d,e로 계산한 기대매출
-let afterExpectSale = 0; // a,b,d,e 변화에 따른 기대매출
+let expectSale = 0; // 원래 a,d,e로 계산한 기대매출
+let afterExpectSale = 0; // a,d,e 변화에 따른 기대매출
 
 aUp.addEventListener('click', function () {a += 1;drawChartAlter();showAfterABDE()}); // 클릭하면 a값 1 증가 / 차트 출력()
-bUp.addEventListener('click', function () {b += 1;drawChartAlter();showAfterABDE()});
 dUp.addEventListener('click', function () {d += 1;drawChartAlter();showAfterABDE()});
 eUp.addEventListener('click', function () {e += 1;drawChartAlter();showAfterABDE()});
 aDown.addEventListener('click', function () {a -= 1;drawChartAlter();showAfterABDE()});
-bDown.addEventListener('click', function () {b -= 1;drawChartAlter();showAfterABDE()});
 dDown.addEventListener('click', function () {d -= 1;drawChartAlter();showAfterABDE()});
 eDown.addEventListener('click', function () {e -= 1;drawChartAlter();showAfterABDE()});
 
-// 변화된 a,b,d,e 값 출력
+// 변화된 a,d,e 값 출력
 function showAfterABDE() {
   document.querySelector('.afterA').innerText = "변화값 : "+Math.ceil(a*100)/100;
-  document.querySelector('.afterB').innerText = "변화값 : "+Math.ceil(b*100)/100;
   document.querySelector('.afterD').innerText = "변화값 : "+Math.ceil(d*100)/100;
   document.querySelector('.afterE').innerText = "변화값 : "+Math.ceil(e*100)/100;
 }
 
-// 기대매출 계산 - a,b,d,e 변화에 따른(유저가 변경한) 기대매출 계산함
+// 기대매출 계산 - a,d,e 변화에 따른(유저가 변경한) 기대매출 계산함
 function calcAfterExpectSale() {
   // 변수(a,b,d,e 중 하나)에 따른 기대매출 변화
-  let w1 = ((B * (E / 100) * ((A / I) * (I / 8 + 1 / 2) * ((100 + a + 3 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100))); // 1주차 가격
-  let w2 = (B * (F / 100) * ((A / I) * ((3 / 8) * I + 1 / 2) * ((100 + a + 2 * b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 2주차 가격
-  let w3 = (B * (G / 100) * ((A / I) * ((5 / 8) * I + 1 / 2) * ((100 + a + b) / 100)) * ((100 + d) / 100) * ((100 + e) / 100)); // 3주차 가격
-  let w4 = (B * (H / 100) * ((A / I) * ((7 / 8) * I + 1 / 2) * (100 + a) / 100) * ((100 + d) / 100) * ((100 + e) / 100)); // 4주차 가격
+  let w1 = (B*E/100*A/I* (I/8 + 1/2) * (100+(1+4/I)*100+(1+4/I)*((1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)-100)/100*(100+d)/100*(100+e)/100); // 1주차 가격
+  let w2 = (B*F/100*A/I* ((3/8)*I + 1/2) * (100+(1+2/I)*100+(1+2/I)*(4/(3*I)*100)+(1+4/(3*I))*a-100)/100*(100+d)/100*(100+e)/100); // 2주차 가격
+  let w3 = (B*G/100*A/I* ((5/8)*I + 1/2) *(100+4/(3*I)*100+(1+4/(3*I))*a)*(100+d)/100*(100+e)/100); // 3주차 가격
+  let w4 = (B*H/100*A/I* ((7/8)*I + 1/2) * (100+a)/100*(100+d)/100*(100+e)/100); // 4주차 가격
 
   // 기대 매출 합계 계산
   let total = w1 + w2 + w3 + w4;
@@ -329,7 +276,7 @@ function drawChart(dataABDE, seq) {
 
 
 
-// a,b,d,e 변화값에(유저가 변경한) 따른 기대매출 차트 출력 함수
+// a,d,e 변화값에(유저가 변경한) 따른 기대매출 차트 출력 함수
 function drawChartAlter() {
   // 차트 데이터 계산
   calcAfterExpectSale();
@@ -342,7 +289,7 @@ function drawChartAlter() {
   ]);
 
   var options = {
-    title: 'a,b,d,e 에 따른 기대 매출 변화',
+    title: 'a,d,e 에 따른 기대 매출 변화',
     vAxis: {
       viewWindow: {
           max: afterExpectSale*1.2,
@@ -352,7 +299,7 @@ function drawChartAlter() {
   };
 
   var chart = new google.visualization.ColumnChart(
-    document.getElementById('alterABDE'));
+    document.getElementById('alterADE'));
 
   chart.draw(data, options);
 
@@ -437,33 +384,31 @@ function drawChartK() {
 
 
 
-/////////////////////////////////// 계산하기 버튼 클릭시 실행 - a,b,d,e의 변화에 따른 기대매출 출력//////////////////////////////
+/////////////////////////////////// 계산하기 버튼 클릭시 실행 - a,d,e의 변화에 따른 기대매출 출력//////////////////////////////
 function drawBasic(event) {
   event.preventDefault();
   // a,b,d,e중 계산한 변수 가져오기
   const result = calcABDE();
   console.log("result : " + result);
-  document.querySelector('.alter-wrapper').style.display="block"; // a,b,d,e 값 조절 버튼 보이기
+  document.querySelector('.alter-wrapper').style.display="block"; // a,d,e 값 조절 버튼 보이기
   showAfterABDE();
 
   fr.sales.value = A * B; // 총매출 값 = 수강료*수강인원 출력
 
 
-  // a,b,d,e 중 3개 값 넣어야 그래프 출력됨
+  // a,d,e 중 2개 값 넣어야 그래프 출력됨
   if (check() == false) {
     return;
   }
 
-  // a,b,d,e값에 따른 기대 매출 그래프 출력
+  // a,d,e값에 따른 기대 매출 그래프 출력
   console.log("a : "+a);
-  console.log("b : "+b);
   console.log("d : "+d);
   console.log("e : "+e);
 
   drawChart('a', 1);
-  drawChart('b', 2);
-  drawChart('d', 3);
-  drawChart('e', 4);
+  drawChart('d', 2);
+  drawChart('e', 3);
   drawChartAlter();
   drawChartK();
 

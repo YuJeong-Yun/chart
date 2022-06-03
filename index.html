@@ -49,8 +49,8 @@
 				<td><input type="text" name="B" required value="100" onkeyup="calcMaxE();"></td>
 				<td>주단위 이용고객(2주 이하)</td>
 				<td><input type="text" name="week2" required value="20"></td>
-				<td>b</td>
-				<td><input type="text" name="b" value="20"></td>
+				<td>출석률 고려한 추가수강 변수(d)</td>
+				<td><input type="text" name="d" value="10"></td>
 				
 			</tr>
 			<tr>
@@ -58,16 +58,16 @@
 				<td><!--<input type="text" name="C" required value="150"  onkeyup="calcMaxE();">--></td>
 				<td>주단위 이용고객(3주 이하)</td>
 				<td><input type="text" name="week3" required value="60"></td>
-				<td>출석률 고려한 추가수강 변수(d)</td>
-				<td><input type="text" name="d" value="10"></td>
+				<td>신규고객 비율(e)</td>
+				<td><input type="text" name="e"></td>
 			</tr>
 			<tr>
 				<td>평균출석일</td>
 				<td><input type="text" name="D" value="20"></td>
 				<td>주단위 이용고객(4주 이하)</td>
 				<td><input type="text" name="week4" required value="10"></td>
-				<td>신규고객 비율(e)</td>
-				<td><input type="text" name="e"><!--<input type="text" name="maxE" disabled="disabled">--></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>총영업일</td>
@@ -87,10 +87,11 @@
 
 	<section class="chartResult">
     <div class="inner">
-      <div id="chart_div1" style="width:700px; height:500px"></div> <!--a값 증가에 따른 기대매출 그래프-->
-      <div id="chart_div2" style="width:700px; height:500px"></div> <!--b-->
-      <div id="chart_div3" style="width:700px; height:500px"></div> <!--d-->
-      <div id="chart_div4" style="width:700px; height:500px"></div> <!--e-->
+      <div class="chart-wrapper">
+        <div id="chart_div1" style="width:700px; height:500px"></div> <!--a값 증가에 따른 기대매출 그래프-->
+        <div id="chart_div2" style="width:700px; height:500px"></div> <!--d-->
+        <div id="chart_div3" style="width:700px; height:500px"></div> <!--e-->
+      </div>
       <div class="alter-wrapper" style="display: none;">
         <div class="alterA">
           a 
@@ -98,13 +99,6 @@
           <div class="aDown">▽</div> <!--클릭하면 a값 -1-->
           <div class="nowA"></div> <!--초기 a값-->
           <div class="afterA"></div> <!--사용자가 변경한 a값-->
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="alterB">
-          b 
-          <div class="bUp">△</div>
-          <div class="bDown">▽</div>
-          <div class="nowB"></div>
-          <div class="afterB"></div>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="alterD">
           d 
@@ -121,7 +115,7 @@
           <div class="afterE"></div>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
-      <div id="alterABDE" style="width:700px; height:500px"></div> <!-- a,b,d,e 선택값에 따른 기대매출 그래프 -->
+      <div id="alterADE" style="width:700px; height:500px"></div> <!-- a,d,e 선택값에 따른 기대매출 그래프 -->
       <div id="chart_k" style="width:1400px; height:400px"></div>
       <div id="kResult"></div>
     </div>
